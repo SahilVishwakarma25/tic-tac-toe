@@ -110,8 +110,36 @@ canvas {
   text-align: center;
   font-size: 2rem;
   background-color: rgb(255, 156, 26);
-  
+}
 
+@media (max-width: 600px) {
+  .game-board {
+    width: 80%;
+    height: auto;
+  }
 
+  .square {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+  }
 
+  .status {
+    font-size: 1.2rem;
+  }
+
+  #gamename {
+    font-size: 1.5rem;
+  }
+
+  .game {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .game-info {
+    margin-top: 20px;
+    margin-left: 0;
+  }
 }
