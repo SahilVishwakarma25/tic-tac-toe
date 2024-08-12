@@ -1,7 +1,8 @@
-// Confetti.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Confetti = () => {
+  const [showCanvas, setShowCanvas] = useState(true);
+
   useEffect(() => {
     let W = window.innerWidth;
     let H = window.innerHeight;
@@ -9,6 +10,7 @@ const Confetti = () => {
     const context = canvas.getContext('2d');
     const maxConfettis = 150;
     const particles = [];
+    let animationFrameId;
 
     const possibleColors = [
       'DodgerBlue', 'OliveDrab', 'Gold', 'Pink', 'SlateBlue', 'LightBlue',
@@ -41,7 +43,7 @@ const Confetti = () => {
 
     function Draw() {
       const results = [];
-      requestAnimationFrame(Draw);
+      animationFrameId = requestAnimationFrame(Draw);
       context.clearRect(0, 0, W, window.innerHeight);
 
       for (let i = 0; i < maxConfettis; i++) {
@@ -49,15 +51,12 @@ const Confetti = () => {
       }
 
       let particle = {};
-      let remainingFlakes = 0;
       for (let i = 0; i < maxConfettis; i++) {
         particle = particles[i];
 
         particle.tiltAngle += particle.tiltAngleIncremental;
         particle.y += (Math.cos(particle.d) + 3 + particle.r / 2) / 2;
         particle.tilt = Math.sin(particle.tiltAngle - i / 3) * 15;
-
-        if (particle.y <= H) remainingFlakes++;
 
         if (particle.x > W + 30 || particle.x < -30 || particle.y > H) {
           particle.x = Math.random() * W;
@@ -83,9 +82,23 @@ const Confetti = () => {
     canvas.width = W;
     canvas.height = H;
     Draw();
+
+    // Stop the animation after 5 seconds (5000 milliseconds)
+    const stopAnimation = () => {
+      cancelAnimationFrame(animationFrameId);
+      setShowCanvas(false); // Hide the canvas
+    };
+
+    const timeoutId = setTimeout(stopAnimation, 3000);
+
+    // Cleanup on component unmount
+    return () => {
+      clearTimeout(timeoutId);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
-  return <canvas id="canvas"></canvas>;
+  return showCanvas ? <canvas id="canvas"></canvas> : null;
 };
 
 export default Confetti;

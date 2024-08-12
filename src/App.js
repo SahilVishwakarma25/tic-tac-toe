@@ -19,9 +19,12 @@ function Board({ xIsNext, squares, onSquareClick }) {
   }
 
   const winner = calculateWinner(squares);
+  const isDraw = squares.every((square) => square !== null) && !winner;
   let status;
   if (winner) {
     status = "Winner: " + winner;
+  } else if (isDraw) {
+    status = "It's a Draw!";
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -46,6 +49,7 @@ function Board({ xIsNext, squares, onSquareClick }) {
           <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
         </div>
       </div>
+      {winner && <Confetti />} {/* Render Confetti if there is a winner */}
     </>
   );
 }
@@ -59,6 +63,7 @@ export default function Game() {
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
   const winner = calculateWinner(currentSquares);
+  const isDraw = currentSquares.every((square) => square !== null) && !winner;
 
   function handlePlay(i) {
     const nextSquares = currentSquares.slice();
@@ -98,23 +103,33 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-  return (<>
-    <div id="gamename">TIC TAC TOE</div>
-    <div className="game">
-      
-      <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onSquareClick={handlePlay} />
-        {winner && <Confetti />}
+  function handleReset() {
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+    setUndoStack([]);
+    setRedoStack([]);
+  }
+
+  return (
+    <>
+      <div id="gamename">TIC TAC TOE</div>
+      <div className="game">
+        <div className="game-board">
+          <Board xIsNext={xIsNext} squares={currentSquares} onSquareClick={handlePlay} />
+        </div>
+        <div className="game-info">
+          <button onClick={handleUndo} disabled={undoStack.length === 0}>
+            Undo
+          </button>
+          <button onClick={handleRedo} disabled={redoStack.length === 0}>
+            Redo
+          </button>
+          <button onClick={handleReset}>
+            Reset
+          </button>
+        </div>
       </div>
-      <div className="game-info">
-        <button onClick={handleUndo} disabled={undoStack.length === 0}>
-          Undo
-        </button>
-        <button onClick={handleRedo} disabled={redoStack.length === 0}>
-          Redo
-        </button>
-      </div>
-    </div></>
+    </>
   );
 }
 
