@@ -54,7 +54,7 @@ ul {
   background-color: #ffffff;
   height: 60%;
   box-shadow: 5px 5px 5px rgb(202, 202, 202);
-  
+  background-color: rgb(255, 255, 255);
 }
 
 .square {
@@ -118,23 +118,28 @@ canvas {
 
 @media (max-width: 600px) {
   .game-board {
-    width: 80%;
-    height: auto;
+    width: 90%; /* Adjust the width to fit better on mobile */
+    height: auto; /* Let the height adjust automatically */
   }
 
   .square {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 20px;
+    width: 30px; /* Reduce the size of the squares */
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px; /* Adjust the font size */
   }
 
   .status {
-    font-size: 1.2rem;
+    font-size: 1rem; /* Make the status text smaller */
   }
-
+  .board-pos {
+    display: grid;
+    place-items: top;
+    margin-bottom:5rem;
+    
+}
   #gamename {
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* Adjust the game name font size */
   }
 
   .game {
@@ -145,5 +150,10 @@ canvas {
   .game-info {
     margin-top: 20px;
     margin-left: 0;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%; /* Ensure canvas covers the entire screen */
   }
 }
