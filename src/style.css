@@ -138,6 +138,27 @@ canvas {
     margin-bottom:5rem;
     
 }
+.square {
+  background: #ffffff;
+  border: 2px solid #ebdcff;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 70px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 70px;  
+}
+.board-pos {
+  display: grid;
+  place-items: center;
+  padding-top: 3rem;
+ 
+}
+
   #gamename {
     font-size: 1.5rem; /* Adjust the game name font size */
   }
