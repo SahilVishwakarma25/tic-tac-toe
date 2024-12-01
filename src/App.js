@@ -112,7 +112,7 @@ export default function Game() {
 
   return (
     <>
-      <div id="gamename">TIC TAC TOE</div>
+      <div id="gamename">TIC PAC TOE</div>
       <div className="game">
         <div className="game-board">
           <Board xIsNext={xIsNext} squares={currentSquares} onSquareClick={handlePlay} />
